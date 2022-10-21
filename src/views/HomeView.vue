@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home__container">
     <HomeHeader />
     <HomeSearch />
     <HomePokemonsList />
@@ -27,3 +27,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.home__container {
+  padding: 30px 25px;
+
+  background: $background;
+}
+</style>
