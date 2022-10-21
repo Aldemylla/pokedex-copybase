@@ -2,10 +2,12 @@ import axios from 'axios';
 
 const mutations = {
   SET_POKEMONS: 'SET_POKEMONS',
+  SET_POKEMONS_COUNT: 'SET_POKEMONS_COUNT',
   SET_REQUEST_PAGES: 'SET_REQUEST_PAGES',
   SET_ERROR: 'SET_ERROR'
 };
-const { SET_POKEMONS, SET_REQUEST_PAGES, SET_ERROR } = mutations;
+const { SET_POKEMONS, SET_POKEMONS_COUNT, SET_REQUEST_PAGES, SET_ERROR } =
+  mutations;
 const initialState = {
   search: '',
   filteredPokemon: null,
@@ -24,24 +26,46 @@ const initialState = {
 };
 
 async function getPokemons(url, commit) {
+  let pokemonEndpoints = [];
+  let pokemons = [];
+
   await axios
     .get(url)
     .then((response) => {
       const { data } = response;
       const { count, results, next, previous } = data;
 
-      const treatedPokemons = {
-        count: count,
-        results: results
-      };
-
       const treatedRequestPages = {
         next: next,
         previous: previous
       };
 
-      commit(SET_POKEMONS, treatedPokemons);
+      results.forEach((pokemon) => {
+        pokemonEndpoints.push(pokemon.url);
+      });
+
+      commit(SET_POKEMONS_COUNT, count);
       commit(SET_REQUEST_PAGES, treatedRequestPages);
+      commit(SET_ERROR, false);
+    })
+    .catch(() => {
+      commit(SET_ERROR, true);
+    });
+
+  await axios
+    /*
+    
+      "axios.all" will be used because the (previous) request from the pokemon 
+      list doesn't return sprites or ids, only the name;
+
+      I don't believe this is a good practice, but I did it because of API limitations.
+
+    */
+    .all(pokemonEndpoints.map((endpoint) => axios.get(endpoint)))
+    .then((allResponses) => {
+      allResponses.forEach((response) => pokemons.push(response.data));
+
+      commit(SET_POKEMONS, pokemons);
       commit(SET_ERROR, false);
     })
     .catch(() => {
@@ -57,8 +81,12 @@ export default {
       return state.filteredPokemon;
     },
 
+    getPokemonsCount(state) {
+      return state.pokemons.count;
+    },
+
     getPokemons(state) {
-      return state.pokemons;
+      return state.pokemons.results;
     },
 
     getRequestPages(state) {
@@ -71,8 +99,11 @@ export default {
   },
 
   mutations: {
+    [SET_POKEMONS_COUNT](state, value) {
+      state.pokemons.count = value;
+    },
     [SET_POKEMONS](state, value) {
-      state.pokemons = value;
+      state.pokemons.results = value;
     },
     [SET_REQUEST_PAGES](state, value) {
       state.request.pages = value;
