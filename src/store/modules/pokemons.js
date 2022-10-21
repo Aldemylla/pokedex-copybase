@@ -1,13 +1,22 @@
 import axios from 'axios';
+import router from '@/router';
 
 const mutations = {
   SET_POKEMONS: 'SET_POKEMONS',
+  SET_FILTERED_POKEMON: 'SET_FILTERED_POKEMON',
   SET_POKEMONS_COUNT: 'SET_POKEMONS_COUNT',
   SET_REQUEST_PAGES: 'SET_REQUEST_PAGES',
+  SET_SEARCH: 'SET_SEARCH',
   SET_ERROR: 'SET_ERROR'
 };
-const { SET_POKEMONS, SET_POKEMONS_COUNT, SET_REQUEST_PAGES, SET_ERROR } =
-  mutations;
+const {
+  SET_POKEMONS,
+  SET_FILTERED_POKEMON,
+  SET_POKEMONS_COUNT,
+  SET_REQUEST_PAGES,
+  SET_SEARCH,
+  SET_ERROR
+} = mutations;
 const initialState = {
   search: '',
   filteredPokemon: null,
@@ -25,7 +34,7 @@ const initialState = {
   }
 };
 
-async function getPokemons(url, commit) {
+async function listPokemons(url, commit) {
   let pokemonEndpoints = [];
   let pokemons = [];
 
@@ -102,30 +111,58 @@ export default {
     [SET_POKEMONS_COUNT](state, value) {
       state.pokemons.count = value;
     },
+
     [SET_POKEMONS](state, value) {
       state.pokemons.results = value;
     },
+
+    [SET_FILTERED_POKEMON](state, value) {
+      state.filteredPokemon = value;
+    },
+
     [SET_REQUEST_PAGES](state, value) {
       state.request.pages = value;
     },
+
+    [SET_SEARCH](state, search) {
+      state.search = search;
+    },
+
     [SET_ERROR](state, value) {
       state.request.isError = value;
     }
   },
 
   actions: {
-    getAllPokemons({ commit, state }) {
-      const URI = 'https://pokeapi.co/api/v2/pokemon';
+    getInitialPage({ commit, state }) {
+      const URI = 'https://pokeapi.co/api/v2/pokemon/';
 
-      getPokemons(`${URI}?offset=0&limit=${state.request.limit}`, commit);
+      listPokemons(`${URI}?offset=0&limit=${state.request.limit}`, commit);
     },
 
-    getNextPokemons({ commit, state }) {
-      getPokemons(state.request.pages.next, commit);
+    getNextPage({ commit, state }) {
+      listPokemons(state.request.pages.next, commit);
     },
 
-    getPreviousPokemons({ commit, state }) {
-      getPokemons(state.request.pages.previous, commit);
+    getPreviousPage({ commit, state }) {
+      listPokemons(state.request.pages.previous, commit);
+    },
+
+    async getPokemon({ commit }) {
+      const URI = 'https://pokeapi.co/api/v2/pokemon/';
+      const pokemonName = router.currentRoute._value.params.pokemonName;
+
+      await axios
+        .get(URI + pokemonName)
+        .then((response) => {
+          const { data: pokemon } = response;
+
+          commit(SET_FILTERED_POKEMON, pokemon);
+          commit(SET_ERROR, false);
+        })
+        .catch(() => {
+          commit(SET_ERROR, true);
+        });
     }
   }
 };
