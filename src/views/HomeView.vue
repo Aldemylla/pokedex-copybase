@@ -1,19 +1,13 @@
 <template>
-  <main>
-    <p>Hello, World!</p>
-  </main>
+  <div>
+    <HomeHeader />
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import HomeHeader from '@/components/HomeHeader.vue';
 
 export default {
-  created() {
-    this.getAllPokemons();
-  },
-
-  methods: {
-    ...mapActions(['getAllPokemons'])
-  }
+  components: { HomeHeader }
 };
 </script>
