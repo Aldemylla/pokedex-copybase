@@ -36,7 +36,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 
-  padding: 30px 25px;
+  padding: 20px;
 
   background: $background;
 }
