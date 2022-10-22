@@ -1,6 +1,6 @@
 <template>
-  <main v-if="!!pokemons?.[0].id">
-    <ol class="home__pokemons-list">
+  <main v-if="!!pokemons?.[0].id" class="home__pokemons-list">
+    <ol class="pokemons-list__container">
       <HomePokemonCard
         v-for="pokemon in pokemons"
         :key="pokemon.name"
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home__pokemons-list {
+.pokemons-list__container {
   width: 80%;
 
   display: flex;

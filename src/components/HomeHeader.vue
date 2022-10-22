@@ -1,12 +1,12 @@
 <template>
-  <header class="weather__header">
+  <header class="home__header">
     <img src="@/assets/icons/pokedex.svg" alt="Pokédex icon" />
     <h1 class="title">Pokédex</h1>
   </header>
 </template>
 
 <style lang="scss" scoped>
-.weather__header {
+.home__header {
   display: flex;
   align-items: center;
   gap: 16px;

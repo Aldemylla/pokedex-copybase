@@ -28,16 +28,35 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.home__container {
-  min-height: 100vh;
+<style lang="scss">
+.home {
+  &__container {
+    min-height: 100vh;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-  padding: 20px;
+    padding: 20px;
 
-  background: $background;
+    background: $background;
+  }
+
+  @media only screen and (max-width: 768px) {
+    &__header {
+      order: 1;
+    }
+    &__search {
+      order: 2;
+    }
+    &__nav {
+      order: 3;
+
+      margin-top: 20px;
+    }
+    &__pokemons-list {
+      order: 4;
+    }
+  }
 }
 </style>
