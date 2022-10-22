@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="pokemon__display">
     <img :src="sprite" alt="pokemonName" />
-    <div class="types">
+    <div>
       <PokemonType v-for="type in types" :key="type" :type="type" />
     </div>
   </section>
@@ -27,3 +27,21 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.pokemon__display {
+  display: grid;
+  justify-content: center;
+  grid-template-rows: 60px auto;
+  justify-items: center;
+
+  img {
+    width: 300px;
+    transform: translateY(-80%);
+
+    @media only screen and (max-width: 480px) {
+      width: 250px;
+    }
+  }
+}
+</style>
