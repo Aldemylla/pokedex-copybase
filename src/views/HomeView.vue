@@ -30,6 +30,12 @@ export default {
 
 <style lang="scss" scoped>
 .home__container {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   padding: 30px 25px;
 
   background: $background;

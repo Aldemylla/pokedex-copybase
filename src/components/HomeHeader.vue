@@ -7,8 +7,6 @@
 
 <style lang="scss" scoped>
 .weather__header {
-  height: 100%;
-
   display: flex;
   align-items: center;
   gap: 16px;
@@ -19,7 +17,12 @@
   .title {
     font-weight: 600;
     font-size: 2rem;
+    text-align: center;
     color: $dark-gray;
+  }
+
+  @media only screen and (max-width: 768px) {
+    justify-content: center;
   }
 }
 </style>
