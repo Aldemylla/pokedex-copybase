@@ -1,7 +1,14 @@
 <template>
-  <div v-if="pokemon" class="pokemon">
+  <div
+    v-if="pokemon"
+    class="pokemon"
+    :style="{
+      background: pokeTypeColor,
+      color: pokeTypeColor
+    }"
+  >
     <PokemonHeader :pokemon-name="pokemon.name" :pokemon-id="pokemon.id" />
-    <main>
+    <main class="pokemon__main">
       <PokemonDisplay
         :sprite="pokemon.sprites.other['official-artwork'].front_default"
         :pokemon-name="pokemon.name"
@@ -12,7 +19,10 @@
         :height="pokemon.height"
         :special-move="pokemon.moves[0].move.name"
       />
-      <PokemonBaseStats :stats="pokemon.stats" />
+      <PokemonBaseStats
+        :stats="pokemon.stats"
+        :poke-type-color="pokeTypeColor"
+      />
     </main>
   </div>
 </template>
@@ -31,7 +41,8 @@ export default {
   computed: {
     ...mapGetters({
       error: 'getError',
-      pokemon: 'getFilteredPokemon'
+      pokemon: 'getFilteredPokemon',
+      pokeTypeColor: 'getFilteredPokemonTypeColor'
     })
   },
 
@@ -52,3 +63,31 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.pokemon {
+  min-height: 100vh;
+
+  padding: 1% 5% 5%;
+
+  .pokemon__main {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    margin: auto;
+    padding: 5%;
+
+    border-radius: 8px;
+    background: $white;
+
+    h3 {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  }
+}
+</style>

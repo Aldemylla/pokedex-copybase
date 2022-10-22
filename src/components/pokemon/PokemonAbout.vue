@@ -3,20 +3,26 @@
     <h3>About</h3>
     <main>
       <dl>
-        <dt>
-          <img src="" alt="" />
-          <p>{{ weight }} kg</p>
-        </dt>
-        <dt>Weight</dt>
+        <div class="definition__container">
+          <dd>
+            <img src="@/assets/icons/balance.svg" alt="" />
+            <p>{{ weight }} kg</p>
+          </dd>
+          <dt>Weight</dt>
+        </div>
 
-        <dd>
-          <img src="" alt="" />
-          <p>{{ height }} m</p>
-        </dd>
-        <dt>Height</dt>
+        <div class="definition__container">
+          <dd>
+            <img src="@/assets/icons/scale.svg" alt="" />
+            <p>{{ height }} m</p>
+          </dd>
+          <dt>Height</dt>
+        </div>
 
-        <dd>{{ specialMove }}</dd>
-        <dt>Special Move</dt>
+        <div class="definition__container">
+          <dd>{{ specialMove }}</dd>
+          <dt>Special Move</dt>
+        </div>
       </dl>
     </main>
   </section>
@@ -40,3 +46,41 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.pokemon__about {
+  width: 100%;
+
+  display: grid;
+  justify-items: center;
+  gap: 30px;
+
+  dl {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    @media only screen and (max-width: 480px) {
+      grid-template-columns: none;
+      gap: 20px;
+    }
+
+    .definition__container {
+      display: grid;
+      justify-items: center;
+
+      dt {
+        color: $gray;
+      }
+
+      dd {
+        display: flex;
+        gap: 10px;
+
+        color: $dark-gray;
+      }
+    }
+  }
+}
+</style>

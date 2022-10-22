@@ -2,7 +2,7 @@
   <section class="pokemon__base-stats">
     <h3>Base Stats</h3>
 
-    <div>
+    <div class="stats">
       <PokemonStat :stat="hp.stat.name" :base-stat="hp.base_stat" />
       <PokemonStat :stat="attack.stat.name" :base-stat="attack.base_stat" />
       <PokemonStat :stat="defense.stat.name" :base-stat="defense.base_stat" />
@@ -50,3 +50,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.pokemon__base-stats {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  .stats {
+    width: 100%;
+  }
+}
+</style>
