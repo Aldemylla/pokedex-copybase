@@ -10,10 +10,10 @@
 <script>
 import { mapActions } from 'vuex';
 
-import HomeHeader from '@/components/HomeHeader.vue';
-import HomeSearch from '@/components/HomeSearch.vue';
-import HomePokemonsList from '@/components/HomePokemonsList.vue';
-import HomeNav from '@/components/HomeNav.vue';
+import HomeHeader from '@/components/home/HomeHeader.vue';
+import HomeSearch from '@/components/home/HomeSearch.vue';
+import HomePokemonsList from '@/components/home/HomePokemonsList.vue';
+import HomeNav from '@/components/home/HomeNav.vue';
 
 export default {
   components: { HomeHeader, HomeSearch, HomePokemonsList, HomeNav },
