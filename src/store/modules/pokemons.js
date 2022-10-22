@@ -90,6 +90,10 @@ export default {
       return state.filteredPokemon;
     },
 
+    getFilteredPokemonTypeColor(state) {
+      return `var(--poke-type-${state.filteredPokemon.types[0].type.name})`;
+    },
+
     getPokemonsCount(state) {
       return state.pokemons.count;
     },
